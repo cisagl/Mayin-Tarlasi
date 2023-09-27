@@ -169,7 +169,7 @@ public class MineSweeper {
                         if (i == row && j == col) {
                             System.out.print(mineTracker + " ");
                         } else if (dizi[i][j] == "-") {
-                            System.out.print("- ");
+                            System.out.print(dizi[i][j]);
                         } else {
                             System.out.print("- ");
                         }
