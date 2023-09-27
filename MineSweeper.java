@@ -4,7 +4,7 @@ public class MineSweeper {
 
     int fieldRow;
     int fieldCol;
-    int[][] dizi;
+    String[][] dizi;
     int row;
     int col;
 
@@ -23,7 +23,7 @@ public class MineSweeper {
             if (n >= 2 && k >= 2) {
                 this.fieldRow = n;
                 this.fieldCol = k;
-                this.dizi = new int[fieldRow][fieldCol];
+                this.dizi = new String[fieldRow][fieldCol];
                 isConditions = true;
             } else {
                 System.out.println("Hatalı giriş yaptınız, lütfen tekrar deneyiniz.");
@@ -32,7 +32,7 @@ public class MineSweeper {
     }
 
     public void field() {
-        dizi = new int[fieldRow][fieldCol];
+        dizi = new String[fieldRow][fieldCol]; // String[][] olarak oluşturuyoruz
 
         int totalMines = (fieldRow * fieldCol) / 4;
 
@@ -40,19 +40,20 @@ public class MineSweeper {
             int randomRow = (int) (Math.random() * fieldRow);
             int randomCol = (int) (Math.random() * fieldCol);
 
-            if (dizi[randomRow][randomCol] == 1) {
+            if (dizi[randomRow][randomCol] == "*") { // Mayın yerine "*" kullanıyoruz
                 i--;
             } else {
-                dizi[randomRow][randomCol] = 1;
+                dizi[randomRow][randomCol] = "*"; // Mayın yerine "*" kullanıyoruz
             }
         }
 
         for (int i = 0; i < fieldRow; i++) {
             for (int j = 0; j < fieldCol; j++) {
-                if (dizi[i][j] == 0) {
+                if (dizi[i][j] == null) { // null yerine "-" kullanıyoruz
                     System.out.print("- ");
-                } else
-                    System.out.print("* ");
+                } else {
+                    System.out.print(dizi[i][j] + " ");
+                }
             }
             System.out.println();
         }
@@ -82,7 +83,7 @@ public class MineSweeper {
 
     public int ustKontrol(int row, int col) {
         if (row - 1 >= 0 && col >= 0 && row - 1 < fieldRow && col < fieldCol) {
-            if (dizi[row - 1][col] == 1) {
+            if ("*".equals(dizi[row - 1][col])) { // Mayın yerine "*" kullanıyoruz
                 return 1;
             }
         }
@@ -91,7 +92,7 @@ public class MineSweeper {
 
     public int ustSagKontrol(int row, int col) {
         if (row - 1 >= 0 && col + 1 >= 0 && row - 1 < fieldRow && col + 1 < fieldCol) {
-            if (dizi[row - 1][col + 1] == 1) {
+            if ("*".equals(dizi[row - 1][col + 1])) { // Mayın yerine "*" kullanıyoruz
                 return 1;
             }
         }
@@ -100,7 +101,7 @@ public class MineSweeper {
 
     public int ustSolKontrol(int row, int col) {
         if (row - 1 >= 0 && col - 1 >= 0 && row - 1 < fieldRow && col - 1 < fieldCol) {
-            if (dizi[row - 1][col - 1] == 1) {
+            if ("*".equals(dizi[row - 1][col - 1])) { // Mayın yerine "*" kullanıyoruz
                 return 1;
             }
         }
@@ -109,7 +110,7 @@ public class MineSweeper {
 
     public int solKontrol(int row, int col) {
         if (col - 1 >= 0 && row >= 0 && col - 1 < fieldCol && row < fieldRow) {
-            if (dizi[row][col - 1] == 1) {
+            if ("*".equals(dizi[row][col - 1])) { // Mayın yerine "*" kullanıyoruz
                 return 1;
             }
         }
@@ -118,7 +119,7 @@ public class MineSweeper {
 
     public int sagKontrol(int row, int col) {
         if (col + 1 >= 0 && row >= 0 && col + 1 < fieldCol && row < fieldRow) {
-            if (dizi[row][col + 1] == 1) {
+            if ("*".equals(dizi[row][col + 1])) { // Mayın yerine "*" kullanıyoruz
                 return 1;
             }
         }
@@ -127,7 +128,7 @@ public class MineSweeper {
 
     public int altKontrol(int row, int col) {
         if (row + 1 >= 0 && col >= 0 && row + 1 < fieldRow && col < fieldCol) {
-            if (dizi[row + 1][col] == 1) {
+            if ("*".equals(dizi[row + 1][col])) { // Mayın yerine "*" kullanıyoruz
                 return 1;
             }
         }
@@ -136,7 +137,7 @@ public class MineSweeper {
 
     public int altSagKontrol(int row, int col) {
         if (row + 1 >= 0 && col + 1 >= 0 && row + 1 < fieldRow && col + 1 < fieldCol) {
-            if (dizi[row + 1][col + 1] == 1) {
+            if ("*".equals(dizi[row + 1][col + 1])) { // Mayın yerine "*" kullanıyoruz
                 return 1;
             }
         }
@@ -145,51 +146,40 @@ public class MineSweeper {
 
     public int altSolKontrol(int row, int col) {
         if (row + 1 >= 0 && col - 1 >= 0 && row + 1 < fieldRow && col - 1 < fieldCol) {
-            if (dizi[row + 1][col - 1] == 1) {
+            if ("*".equals(dizi[row + 1][col - 1])) { // Mayın yerine "*" kullanıyoruz
                 return 1;
             }
         }
         return 0;
     }
 
+
     public void game() {
-        // Boolean ile win'e yanlış verildi ki mayın seçilirse win'in doğruya dönüp oyunu sonlandırması sağlansın
         boolean win = false;
         while (!win) {
-            // Eğer girilen satır ve sütun numarası 1'e eşitse (mayın seçildiyse) oyunu sonlandır
-            if (dizi[row][col] == 1) {
+            if ((dizi[row][col] == "*")) {
                 System.out.println("Mayına bastınız, oyun bitti");
-                // Eğer koşul sağlanıyorsa win değerini true'ya çevir ki oyun sonlansın
                 win = true;
-                // Eğer girilen satır ve sütun numarası 1'e eşit değilse, (mayın seçilmediyse) döngüyü başlat
-            } else if (dizi[row][col] != 1) {
+            } else if ((dizi[row][col] != "*")) {
 
+                int mineTracker = ustKontrol(row, col) + ustSagKontrol(row, col) + ustSolKontrol(row, col) + solKontrol(row, col) + sagKontrol(row, col) + altKontrol(row, col) + altSolKontrol(row, col) + altSagKontrol(row, col);
 
-                // Tahtayı ekrana yazdırma döngüsü
                 for (int i = 0; i < fieldRow; i++) {
                     for (int j = 0; j < fieldCol; j++) {
-                        // Seçilen hücrenin her tarafını kontrol etme mekanizması
-                        int mineTracker = ustKontrol(row, col) + ustSagKontrol(row, col) + ustSolKontrol(row, col) + solKontrol(row, col) + sagKontrol(row, col) + altKontrol(row, col) + altSolKontrol(row, col) + altSagKontrol(row, col);
-                        // Eğer satır numarası ilk döngüye eşitse ve sütun numarası ikinci döngüye eşitse
                         if (i == row && j == col) {
-                            // Ekrana etraftaki mayınları bastır
                             System.out.print(mineTracker + " ");
-                            // Eğer ilk ve ikinci döngü 0'a eşitse boş alan yerine "-" bastır
-                        } else if (dizi[i][j] == 0) {
+                        } else if (dizi[i][j] == "-") {
                             System.out.print("- ");
-                            // Kalan mayınları gizlemek için - kullan
                         } else {
                             System.out.print("- ");
                         }
                     }
-                    // Her satırdan sonra bir alt satıra in
                     System.out.println();
                 }
+
+                System.out.println("Mayına basmadınız, devam edin");
+                selection();
             }
-            // Mayına basılmadıysa devamı için uyarı mesajı
-            System.out.println("Mayına basmadınız, devam edin");
-            // Mayına basılmadıysa kullanıcıdan tekrar satır ve sütun bilgisi alınmalı
-            selection();
         }
     }
 }
