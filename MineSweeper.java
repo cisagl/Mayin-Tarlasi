@@ -97,7 +97,7 @@ public class MineSweeper {
     }
 
     // Değerlendirme formu 2: metotlar
-    public int ustKontrol(int row, int col) {
+    public int topControl(int row, int col) {
         if (row - 1 >= 0 && col >= 0 && row - 1 < fieldRow && col < fieldCol) {
             if ("*".equals(dizi[row - 1][col])) {
                 return 1;
@@ -107,7 +107,7 @@ public class MineSweeper {
     }
 
     // Değerlendirme formu 2: metotlar
-    public int ustSagKontrol(int row, int col) {
+    public int topRightControl(int row, int col) {
         if (row - 1 >= 0 && col + 1 >= 0 && row - 1 < fieldRow && col + 1 < fieldCol) {
             if ("*".equals(dizi[row - 1][col + 1])) {
                 return 1;
@@ -117,7 +117,7 @@ public class MineSweeper {
     }
 
     // Değerlendirme formu 2: metotlar
-    public int ustSolKontrol(int row, int col) {
+    public int topLeftControl(int row, int col) {
         if (row - 1 >= 0 && col - 1 >= 0 && row - 1 < fieldRow && col - 1 < fieldCol) {
             if ("*".equals(dizi[row - 1][col - 1])) {
                 return 1;
@@ -127,7 +127,7 @@ public class MineSweeper {
     }
 
     // Değerlendirme formu 2: metotlar
-    public int solKontrol(int row, int col) {
+    public int leftControl(int row, int col) {
         if (col - 1 >= 0 && row >= 0 && col - 1 < fieldCol && row < fieldRow) {
             if ("*".equals(dizi[row][col - 1])) {
                 return 1;
@@ -137,7 +137,7 @@ public class MineSweeper {
     }
 
     // Değerlendirme formu 2: metotlar
-    public int sagKontrol(int row, int col) {
+    public int rightControl(int row, int col) {
         if (col + 1 >= 0 && row >= 0 && col + 1 < fieldCol && row < fieldRow) {
             if ("*".equals(dizi[row][col + 1])) {
                 return 1;
@@ -147,7 +147,7 @@ public class MineSweeper {
     }
 
     // Değerlendirme formu 2: metotlar
-    public int altKontrol(int row, int col) {
+    public int bottomControl(int row, int col) {
         if (row + 1 >= 0 && col >= 0 && row + 1 < fieldRow && col < fieldCol) {
             if ("*".equals(dizi[row + 1][col])) {
                 return 1;
@@ -157,7 +157,7 @@ public class MineSweeper {
     }
 
     // Değerlendirme formu 2: metotlar
-    public int altSagKontrol(int row, int col) {
+    public int bottomRightControl(int row, int col) {
         if (row + 1 >= 0 && col + 1 >= 0 && row + 1 < fieldRow && col + 1 < fieldCol) {
             if ("*".equals(dizi[row + 1][col + 1])) {
                 return 1;
@@ -167,7 +167,7 @@ public class MineSweeper {
     }
 
     // Değerlendirme formu 2: metotlar
-    public int altSolKontrol(int row, int col) {
+    public int bottomLeftControl(int row, int col) {
         if (row + 1 >= 0 && col - 1 >= 0 && row + 1 < fieldRow && col - 1 < fieldCol) {
             if ("*".equals(dizi[row + 1][col - 1])) {
                 return 1;
@@ -178,8 +178,8 @@ public class MineSweeper {
 
     // Değerlendirme formu 2: metotlar
     // Kullanıcının girdiği hücrenin etrafındaki mayın sayısı hesaplanıyor
-    public int mineTakip(int row, int col) {
-        int mineTracker = ustKontrol(row, col) + ustSagKontrol(row, col) + ustSolKontrol(row, col) + solKontrol(row, col) + sagKontrol(row, col) + altKontrol(row, col) + altSolKontrol(row, col) + altSagKontrol(row, col);
+    public int mineTracker(int row, int col) {
+        int mineTracker = topControl(row, col) + topRightControl(row, col) + topLeftControl(row, col) + leftControl(row, col) + rightControl(row, col) + bottomControl(row, col) + bottomLeftControl(row, col) + bottomRightControl(row, col);
         return mineTracker;
     }
 
@@ -199,7 +199,7 @@ public class MineSweeper {
                     for (int j = 0; j < fieldCol; j++) {
                         if ("S".equals(revealedCells[i][j])) {
                             // Değerlendirme formu 8: etraftaki mayın sayısı yazdırılıyor
-                            System.out.print(mineTakip(i, j) + " ");
+                            System.out.print(mineTracker(i, j) + " ");
                         } else if (dizi[i][j] == "-") {
                             System.out.print(dizi[i][j]);
                         } else {
