@@ -2,7 +2,6 @@ import java.util.Scanner;
 
 // Değerlendirme formu 1: proje MineSweeper sınıfı içerisinde.
 public class MineSweeper {
-
     int fieldRow;
     int fieldCol;
     String[][] dizi;
@@ -176,6 +175,12 @@ public class MineSweeper {
         }
         return 0;
     }
+    // Değerlendirme formu 2: metotlar
+    // Kullanıcının girdiği hücrenin etrafındaki mayın sayısı hesaplanıyor
+    public int mineTakip(int row, int col){
+        int  mineTracker = ustKontrol(row, col) + ustSagKontrol(row, col) + ustSolKontrol(row, col) + solKontrol(row, col) + sagKontrol(row, col) + altKontrol(row, col) + altSolKontrol(row, col) + altSagKontrol(row, col);
+        return mineTracker;
+    }
 
     // Değerlendirme formu 2: metotlar
     // Değerlendirme formu 7: girilen hamlelerden sonra oyun alanı güncelleniyor
@@ -191,10 +196,9 @@ public class MineSweeper {
             } else if ((dizi[row][col] != "*")) {
                 for (int i = 0; i < fieldRow; i++) {
                     for (int j = 0; j < fieldCol; j++) {
-                        int mineTracker = ustKontrol(row, col) + ustSagKontrol(row, col) + ustSolKontrol(row, col) + solKontrol(row, col) + sagKontrol(row, col) + altKontrol(row, col) + altSolKontrol(row, col) + altSagKontrol(row, col);
                         if ("S".equals(revealedCells[i][j])) {
                             // Değerlendirme formu 8: etraftaki mayın sayısı yazdırılıyor
-                            System.out.print(mineTracker + " ");
+                            System.out.print(mineTakip(i, j) + " ");
                         } else if (dizi[i][j] == "-") {
                             System.out.print(dizi[i][j]);
                         } else {
