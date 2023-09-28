@@ -175,10 +175,11 @@ public class MineSweeper {
         }
         return 0;
     }
+
     // Değerlendirme formu 2: metotlar
     // Kullanıcının girdiği hücrenin etrafındaki mayın sayısı hesaplanıyor
-    public int mineTakip(int row, int col){
-        int  mineTracker = ustKontrol(row, col) + ustSagKontrol(row, col) + ustSolKontrol(row, col) + solKontrol(row, col) + sagKontrol(row, col) + altKontrol(row, col) + altSolKontrol(row, col) + altSagKontrol(row, col);
+    public int mineTakip(int row, int col) {
+        int mineTracker = ustKontrol(row, col) + ustSagKontrol(row, col) + ustSolKontrol(row, col) + solKontrol(row, col) + sagKontrol(row, col) + altKontrol(row, col) + altSolKontrol(row, col) + altSagKontrol(row, col);
         return mineTracker;
     }
 
