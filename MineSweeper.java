@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-// Değerlendirme formu 1: proje MineSweeper sınıfı içerisinde.
 public class MineSweeper {
     int fieldRow;
     int fieldCol;
@@ -9,14 +8,9 @@ public class MineSweeper {
     int row;
     int col;
     int totalMines;
-
-    // Değerlendirme formu 2: metotlar
-    // Değerlendirme formu 3: kullanıcıdan tarlanın büyüklüğünün bilgisini alıyoruz
     public void beginning() {
         Scanner input = new Scanner(System.in);
-        // boolean eklenerek sorun olması durumunda (2'den küçük sayı eklenmesi) başa dönülmesi sağlandı
         boolean isConditions = false;
-
         while (!isConditions) {
             System.out.print("Tarla satır sayısını belirtiniz (Minimum 2 yazmalısınız): ");
             int n = input.nextInt();
@@ -40,14 +34,9 @@ public class MineSweeper {
             }
         }
     }
-
-    // Değerlendirme formu 2: metotlar
-    // Değerlendirme formu 4: mayın yerleştirilmesi
     public void field() {
         dizi = new String[fieldRow][fieldCol];
-
         this.totalMines = (fieldRow * fieldCol) / 4;
-
         for (int i = 0; i < totalMines; i++) {
             int randomRow = (int) (Math.random() * fieldRow);
             int randomCol = (int) (Math.random() * fieldCol);
@@ -70,9 +59,6 @@ public class MineSweeper {
             System.out.println();
         }
     }
-
-    // Değerlendirme formu 2: metotlar
-    // Değerlendirme formu 5: işaretlenen satır ve sütun
     public void selection() {
         Scanner input = new Scanner(System.in);
 
@@ -82,7 +68,6 @@ public class MineSweeper {
 
             System.out.print("Sutun sayısı: ");
             int column = input.nextInt();
-            // Değerlendirme formu 6: seçilen nokta dizinin içerisinde mi dışarısında mı kontrolü
             if ((row < fieldRow && row >= 0) && (column < fieldCol && column >= 0) && "-".equals(revealedCells[row][column])) {
                 this.row = row;
                 this.col = column;
@@ -95,8 +80,6 @@ public class MineSweeper {
             }
         }
     }
-
-    // Değerlendirme formu 2: metotlar
     public int topControl(int row, int col) {
         if (row - 1 >= 0 && col >= 0 && row - 1 < fieldRow && col < fieldCol) {
             if ("*".equals(dizi[row - 1][col])) {
@@ -105,8 +88,6 @@ public class MineSweeper {
         }
         return 0;
     }
-
-    // Değerlendirme formu 2: metotlar
     public int topRightControl(int row, int col) {
         if (row - 1 >= 0 && col + 1 >= 0 && row - 1 < fieldRow && col + 1 < fieldCol) {
             if ("*".equals(dizi[row - 1][col + 1])) {
@@ -115,8 +96,6 @@ public class MineSweeper {
         }
         return 0;
     }
-
-    // Değerlendirme formu 2: metotlar
     public int topLeftControl(int row, int col) {
         if (row - 1 >= 0 && col - 1 >= 0 && row - 1 < fieldRow && col - 1 < fieldCol) {
             if ("*".equals(dizi[row - 1][col - 1])) {
@@ -125,8 +104,6 @@ public class MineSweeper {
         }
         return 0;
     }
-
-    // Değerlendirme formu 2: metotlar
     public int leftControl(int row, int col) {
         if (col - 1 >= 0 && row >= 0 && col - 1 < fieldCol && row < fieldRow) {
             if ("*".equals(dizi[row][col - 1])) {
@@ -135,8 +112,6 @@ public class MineSweeper {
         }
         return 0;
     }
-
-    // Değerlendirme formu 2: metotlar
     public int rightControl(int row, int col) {
         if (col + 1 >= 0 && row >= 0 && col + 1 < fieldCol && row < fieldRow) {
             if ("*".equals(dizi[row][col + 1])) {
@@ -145,8 +120,6 @@ public class MineSweeper {
         }
         return 0;
     }
-
-    // Değerlendirme formu 2: metotlar
     public int bottomControl(int row, int col) {
         if (row + 1 >= 0 && col >= 0 && row + 1 < fieldRow && col < fieldCol) {
             if ("*".equals(dizi[row + 1][col])) {
@@ -155,8 +128,6 @@ public class MineSweeper {
         }
         return 0;
     }
-
-    // Değerlendirme formu 2: metotlar
     public int bottomRightControl(int row, int col) {
         if (row + 1 >= 0 && col + 1 >= 0 && row + 1 < fieldRow && col + 1 < fieldCol) {
             if ("*".equals(dizi[row + 1][col + 1])) {
@@ -165,8 +136,6 @@ public class MineSweeper {
         }
         return 0;
     }
-
-    // Değerlendirme formu 2: metotlar
     public int bottomLeftControl(int row, int col) {
         if (row + 1 >= 0 && col - 1 >= 0 && row + 1 < fieldRow && col - 1 < fieldCol) {
             if ("*".equals(dizi[row + 1][col - 1])) {
@@ -175,22 +144,15 @@ public class MineSweeper {
         }
         return 0;
     }
-
-    // Değerlendirme formu 2: metotlar
-    // Kullanıcının girdiği hücrenin etrafındaki mayın sayısı hesaplanıyor
     public int mineTracker(int row, int col) {
         int mineTracker = topControl(row, col) + topRightControl(row, col) + topLeftControl(row, col) + leftControl(row, col) + rightControl(row, col) + bottomControl(row, col) + bottomLeftControl(row, col) + bottomRightControl(row, col);
         return mineTracker;
     }
-
-    // Değerlendirme formu 2: metotlar
-    // Değerlendirme formu 7: girilen hamlelerden sonra oyun alanı güncelleniyor
     public void game() {
         boolean win = false;
         int emptyCells = fieldCol * fieldRow - totalMines;
 
         while (!win) {
-            // Değerlendirme formu 9: mayına bastığında oyun sonlandırılıyor
             if (dizi[row][col] == "*") {
                 System.out.println("Mayına bastınız, oyun bitti");
                 break;
@@ -198,7 +160,6 @@ public class MineSweeper {
                 for (int i = 0; i < fieldRow; i++) {
                     for (int j = 0; j < fieldCol; j++) {
                         if ("S".equals(revealedCells[i][j])) {
-                            // Değerlendirme formu 8: etraftaki mayın sayısı yazdırılıyor
                             System.out.print(mineTracker(i, j) + " ");
                         } else if (dizi[i][j] == "-") {
                             System.out.print(dizi[i][j]);
@@ -210,9 +171,7 @@ public class MineSweeper {
                 }
                 emptyCells--;
                 revealedCells[row][col] = "S";
-                // Değerlendirme formu 10: noktalar başarıyla seçildiğinde oyun kazandırıyor
                 if (emptyCells == 0) {
-                    // Değerlendirme formu 11: kazandığında 'kazandınız', kaybettiğinde 'mayına bastınız' şeklinde mesaj gönderiliyor
                     System.out.println("Tüm boş hücreleri seçtiniz, oyunu kazandınız!");
                     win = true;
                 } else {
